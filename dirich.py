@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import numpy as np
 
-def dirich(omega,L):
 
+def dirich(omega, L):
     """
     DIRICH   compute sin(L*omega/2)/Lsin(omega/2)   
     ------
@@ -14,17 +14,7 @@ def dirich(omega,L):
 
     """
 
-    denom = np.sin(0.5*np.asarray(omega))
-    zdenom = abs(denom)<1e-10
-    D = zdenom + np.logical_not(zdenom)*np.sin((L/2)*np.array(omega))/(L*denom + zdenom) 
+    denom = np.sin(0.5 * np.asarray(omega))
+    zdenom = abs(denom) < 1e-10
+    D = zdenom + np.logical_not(zdenom) * np.sin((L / 2) * np.array(omega)) / (L * denom + zdenom)
     return D
-
-
-
-
-
-
-
-
-
-

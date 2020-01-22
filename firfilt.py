@@ -1,14 +1,13 @@
-#!/bin/usr/env python 
+#!/bin/usr/env python3
 
 import numpy as np
 from scipy.signal import upfirdn
 
 
+def firfilt(bb, xx):
+    """ FIRFILT   FIR filter implemented as a difference equation
 
-def firfilt (bb, xx):
-    '''FIRFILT   FIR filter implemented as a difference equation
-
-    usage:   yy = firfilt(bb, xx) 
+    usage:   yy = firfilt(bb, xx)
 
     implements the FIR filter difference equation:
 
@@ -21,7 +20,7 @@ def firfilt (bb, xx):
 
      The length of the resulting vector is  length(bb)+length(xx)-1.
 
-    '''
+    """
     bb = np.asarray(bb)
     xx = np.asarray(xx)
 

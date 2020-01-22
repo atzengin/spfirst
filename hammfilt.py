@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from math import pi
 import numpy as np
 
-def hammfilt(N , WhHat , hilo="X"):
-        """
+
+def hammfilt(N, WhHat, hilo="X"):
+    """
         HAMMFILT   FIR filter design with a Hamming window
                 works for lowpass, highpass, and bandpass cases
         usage:   hh = hammfilt( N, WhHat, hilo )
@@ -31,24 +32,27 @@ def hammfilt(N , WhHat , hilo="X"):
 	
         """
 
-        if hilo.lower()=="high":
-            if len(WhHat)==1:
-                if N%2: print(">>HAMMFILT: even length HPF not possible");            exit()
-                WhHat[0] = pi - WhHat[0]
-            else:  print(">>HAMMFILT: trying to specify HPF and BPF simultaneously"); exit()              
-                
-        L   = N+1
-        Lm2 = (L-1)/2
-        nn  = np.arange(0,L)-Lm2
-        nn  = nn + (nn==0)*1e-8
-
-        if len(WhHat)==1:       
-            hh = (0.54 - 0.46*np.cos(2*pi*(np.arange(0,L)/(L-1))))*np.sin(WhHat*nn)/(pi*nn) 
-            if hilo.lower() == "high": hh = hh*np.cos(pi*nn)
-        elif len(WhHat)==2:
-            wc = (WhHat[0]+WhHat[1])/2
-            wn = (max(WhHat)-min(WhHat))/2
-            hh = (0.54 - 0.46*np.cos(2*pi*(np.arange(0,L)/(L-1))))*(2*np.cos(wc*nn))*np.sin(wn*nn)/(pi*nn)
+    if hilo.lower() == "high":
+        if len(WhHat) == 1:
+            if N % 2: print(">>HAMMFILT: even length HPF not possible");            exit()
+            WhHat[0] = pi - WhHat[0]
         else:
-            print(">>HAMMFILT: bandedge frequency vector incorrect")
-        return hh
+            print(">>HAMMFILT: trying to specify HPF and BPF simultaneously");
+            exit()
+
+    L = N + 1
+    Lm2 = (L - 1) / 2
+    nn = np.arange(0, L) - Lm2
+    nn = nn + (nn == 0) * 1e-8
+
+    if len(WhHat) == 1:
+        hh = (0.54 - 0.46 * np.cos(2 * pi * (np.arange(0, L) / (L - 1)))) * np.sin(WhHat * nn) / (pi * nn)
+        if hilo.lower() == "high": hh = hh * np.cos(pi * nn)
+    elif len(WhHat) == 2:
+        wc = (WhHat[0] + WhHat[1]) / 2
+        wn = (max(WhHat) - min(WhHat)) / 2
+        hh = (0.54 - 0.46 * np.cos(2 * pi * (np.arange(0, L) / (L - 1)))) * (2 * np.cos(wc * nn)) * np.sin(wn * nn) / (
+                pi * nn)
+    else:
+        print(">>HAMMFILT: bandedge frequency vector incorrect")
+    return hh
