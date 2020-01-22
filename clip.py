@@ -17,7 +17,7 @@ def clip(x , lo , hi):
     
 
   y = x*np.less_equal(x,hi) + hi*np.greater(x,hi)
-  y = y*np.greater(x,lo-1) + lo*np.less(x,lo)
+  y = y*np.greater_equal(x,lo) + lo*np.less(x,lo)
 
   return y
 
