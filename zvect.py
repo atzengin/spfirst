@@ -32,7 +32,7 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
     zTo = np.asarray(zTo)
     scale = 1.0
     linetype = 'b-'
-    if zTo is None:
+    if not zTo:
         zTo = zFrom; zFrom = 0*zTo
     elif zTo is not None:
         if type(zTo) == str:
