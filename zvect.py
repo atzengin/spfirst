@@ -37,7 +37,8 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
     elif zTo is not None:
         if type(zTo) == str:
             linetype = zTo; zTo = zFrom; zFrom = 0*zTo
-        elif len(zTo) == 0:
+        # elif len(zTo) == 0:
+        elif not zTo:
             zTo = zFrom; zFrom = 0*zTo
         elif len(zTo) == 1:
             zTo = zTo * np.ones(zFrom.shape)
