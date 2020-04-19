@@ -32,14 +32,18 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
     zTo = np.asarray(zTo)
     scale = 1.0
     linetype = 'b-'
-    if not zTo:
-        zTo = zFrom; zFrom = 0*zTo
+    if zTo is None:
+        zTo = zFrom
+        zFrom = 0*zTo
     elif zTo is not None:
         if type(zTo) == str:
-            linetype = zTo; zTo = zFrom; zFrom = 0*zTo
+            linetype = zTo
+            zTo = zFrom
+            zFrom = 0*zTo
         # elif len(zTo) == 0:
         elif not zTo:
-            zTo = zFrom; zFrom = 0*zTo
+            zTo = zFrom
+            zFrom = 0*zTo
         elif len(zTo) == 1:
             zTo = zTo * np.ones(zFrom.shape)
     elif zTo and arg3 is not None:
@@ -49,10 +53,12 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
             scale = arg3
     else:
         if type(arg3) == str:
-            linetype = arg3; scale = arg4
+            linetype = arg3
+            scale = arg4
         else:
-            scale = arg3; linetype = arg4
-    
+            scale = arg3
+            linetype = arg4
+
     jkl = np.where(np.logical_not(np.isnan(zTo - zFrom)))[0]
     if len(jkl) == 0:
         exit('cannot plot NaNs')
@@ -63,32 +69,32 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
         zFrom = zFrom * np.ones(zTo.shape)
     elif len(zTo) == 1:
         zTo = zTo * np.ones(zFrom.shape)
-    
+
     if len(zFrom) != len(zTo):
         exit('ZVECT: zFrom and zTo must be same length.')
-    
+
     tt = np.r_[zFrom, zTo]
     # zmx = max(abs(tt))
     jkl = np.where(tt == max(tt))[0]
     figsize = max(abs(tt - tt[jkl]))
-    arrow = scale * (np.vstack((-1, 0, -1)) + 1j*np.vstack((1/4,0,-1/4)))
-    
+    arrow = scale * (np.vstack((-1, 0, -1)) + 1j*np.vstack((1/4, 0, -1/4)))
+
     dz = zTo - zFrom
     dzm = abs(dz)
     zmax = max(dzm)
     zscale = np.mean(np.r_[zmax, figsize])
-    scz = 0.11 + 0.77 * (dzm / zscale -1) ** 6
-    tt = np.array(np.ones((3,1))* zTo + arrow * (scz * dz))
+    scz = 0.11 + 0.77 * (dzm / zscale - 1) ** 6
+    tt = np.array(np.ones((3, 1)) * zTo + arrow * (scz * dz))
 
-    h = plt.plot(np.vstack((zFrom, zTo)).real, np.vstack((zFrom, zTo)).imag, linetype, tt.real , tt.imag, linetype)
+    h = plt.plot(np.vstack((zFrom, zTo)).real, np.vstack(
+        (zFrom, zTo)).imag, linetype, tt.real, tt.imag, linetype)
     num_zzz = len(zFrom)
 
     for kk in range(num_zzz):
         kolor = plt.get(h[kk], 'color')
         plt.setp(h[kk+num_zzz], 'color', kolor)
-    
-    plt.axis('equal')
 
+    plt.axis('equal')
 
     plt.show()
     return h
