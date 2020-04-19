@@ -40,8 +40,7 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
             linetype = zTo
             zTo = zFrom
             zFrom = 0*zTo
-        # elif len(zTo) == 0:
-        elif not zTo:
+        elif zTo.shape == ():
             zTo = zFrom
             zFrom = 0*zTo
         elif len(zTo) == 1:
@@ -75,8 +74,10 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
 
     tt = np.r_[zFrom, zTo]
     # zmx = max(abs(tt))
+    # print(tt)
     jkl = np.where(tt == max(tt))[0]
-    figsize = max(abs(tt - tt[jkl]))
+    # print(jkl)
+    figsize = max(abs(tt - tt[jkl][0]))
     arrow = scale * (np.vstack((-1, 0, -1)) + 1j*np.vstack((1/4, 0, -1/4)))
 
     dz = zTo - zFrom
@@ -96,5 +97,5 @@ def zvect(zFrom, zTo=None, arg3=None, arg4=None):
 
     plt.axis('equal')
 
-    plt.show()
+    # plt.show()
     return h
